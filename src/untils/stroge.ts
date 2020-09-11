@@ -12,17 +12,13 @@ const getStorage = (name = 'user', stroageType = localStorage) => {
 const getLocalStorage = (name = 'user', stroageType = localStorage) => getStorage(name, stroageType)
 const getSessionStorage = (name = 'user', stroageType = sessionStorage) => getStorage(name, stroageType)
 
-const setStorage = (value: string, name = 'user', stroageType = localStorage) => {
-  const  storageData = stroageType.getItem(name);
-  if (!storageData) {
-    return
-  }
+const setStorage = (value: object, name = 'user', stroageType = localStorage) => {
   let data = JSON.stringify(value)
   stroageType.setItem(name, data)
 }
 
-const setLocalStorage = (value: string, name = 'user', stroageType = localStorage) => setStorage(value, name, stroageType)
-const setSessionStorage = (value: string, name = 'user', stroageType = sessionStorage) => setStorage(value, name, stroageType)
+const setLocalStorage = (value: object, name = 'user', stroageType = localStorage) => setStorage(value, name, stroageType)
+const setSessionStorage = (value: object, name = 'user', stroageType = sessionStorage) => setStorage(value, name, stroageType)
 
 const removeStorage = (name = 'user', stroageType = localStorage) => {
   stroageType.removeItem(name);

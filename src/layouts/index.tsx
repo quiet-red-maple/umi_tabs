@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { history } from 'umi';
 import BasicLayout from './BasicLayout';
 import LoginLayout from './LoginLayout';
@@ -13,10 +13,15 @@ const Layouts: React.FC<Props> = props => {
 
   const storageData = getSessionStorage() || getLocalStorage();
 
+  useEffect (() => {
+    if (!storageData) {
+      history.push('/user/login');
+    }
+  }, [])
+
   let nowPathname = location.pathname.split('/');
 
   if (!storageData || nowPathname[1] === 'user') {
-    history.push('/user/login');
     return <LoginLayout children={children} />;
   }
 

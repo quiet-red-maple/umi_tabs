@@ -4,6 +4,7 @@ import { Form, Input, Button, Checkbox, Tooltip } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { LoginData } from '../user';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox/Checkbox';
+import { setLocalStorage, setSessionStorage } from '@/untils/stroge'
 import './login.less';
 
 const Login: React.FC<{}> = props => {
@@ -11,10 +12,15 @@ const Login: React.FC<{}> = props => {
 
   const onFinish = (values: LoginData) => {
     console.log('Success:', values);
-    const { agree } = values;
+    const { agree, remember } = values;
     if (!agree) {
       setVisible(true);
       return
+    }
+    if (remember) {
+      setLocalStorage(values)
+    } else {
+      setSessionStorage(values)
     }
     history.push('/')
   };
@@ -31,6 +37,7 @@ const Login: React.FC<{}> = props => {
     if (e.target.checked) {
       setVisible(false);
     }
+
   };
 
   return (
