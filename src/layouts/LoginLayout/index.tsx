@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '@/components/Footer';
 import BackgroundDOM from './Background';
-import './LoginLayout.less';
+import './loginLayout.less';
 
 interface Props {
   children: React.ReactNode;
