@@ -12,7 +12,7 @@ const Footer:React.FC<{}> = (props) => {
       padding: 20,
       zIndex: 999
       }}>
-      Copyright © 2020 链平方技术部出品
+      Copyright © 2020 ***技术部出品
     </p>
     </>
   )
