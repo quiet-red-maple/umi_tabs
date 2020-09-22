@@ -5,6 +5,7 @@ import React from 'react';
 import { history, Dispatch } from 'umi';
 import { Layout, Tabs } from 'antd';
 import { LayoutStateType } from '@/models/layout';
+import NotPage from '@/pages/404';
 import './tabsMenu.less';
 
 const { Content } = Layout;
@@ -14,6 +15,7 @@ const { TabPane } = Tabs;
 interface Props {
   layoutData: LayoutStateType;
   dispatch: Dispatch;
+  children: any;
 }
 
 const TabsMenu: React.FC<Props> = props => {
@@ -52,6 +54,9 @@ const TabsMenu: React.FC<Props> = props => {
   };
 
   const TabPaneList = tabMenuList.map((item, index) => {
+    if (!item) {
+      return <TabPane key={'404'} tab={<span>{'404'}</span>} />;
+    }
     let key = item.parent ? `${item.parent}/${item.id}` : item.id;
     return (
       <TabPane
@@ -62,9 +67,7 @@ const TabsMenu: React.FC<Props> = props => {
             {item.name}
           </span>
         }
-      >
-        <Content className="tabsMenu_content">{children}</Content>
-      </TabPane>
+      />
     );
   });
 
@@ -73,18 +76,27 @@ const TabsMenu: React.FC<Props> = props => {
   defaultActiveKey = defaultActiveKey ? defaultActiveKey : 'index';
 
   return (
-    <Tabs
-      defaultActiveKey={defaultActiveKey}
-      activeKey={defaultActiveKey}
-      onChange={callback}
-      onEdit={onEdit}
-      type={tabMenuList.length === 1 ? 'card' : 'editable-card'}
-      hideAdd={true}
-      animated={true}
-      className="tabs_menu"
-    >
-      {TabPaneList}
-    </Tabs>
+    <div>
+      <Tabs
+        defaultActiveKey={defaultActiveKey}
+        activeKey={defaultActiveKey}
+        onChange={callback}
+        onEdit={onEdit}
+        type={tabMenuList.length === 1 ? 'card' : 'editable-card'}
+        hideAdd={true}
+        animated={true}
+        className="tabs_menu"
+      >
+        {TabPaneList}
+      </Tabs>
+      {tabMenuList.length ? (
+        <Content className="tabsMenu_content">{children}</Content>
+      ) : (
+        <div className="tabsMenu_content_notPage">
+          <NotPage />
+        </div>
+      )}
+    </div>
   );
 };
 
