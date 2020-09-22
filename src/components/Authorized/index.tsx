@@ -18,6 +18,7 @@ const Authorized = (props: Props) => {
 
   useEffect(() => {
     // 首次加载页面将当前路由所对应页面添加到多页tabMenuList中
+    // 当检测到路由变化时将当前路由所对应页面添加到多页tabMenuList中
     let nowPath = location.pathname.substr(1);
     if (!nowPath) {
       nowPath = 'index';
@@ -44,14 +45,7 @@ const Authorized = (props: Props) => {
       type: 'layout/addTabsMenuList',
       payload: data,
     });
-  }, []);
-
-  const addMenuList = (menu: MenuConfig) => {
-    dispatch({
-      type: 'layout/addTabsMenuList',
-      payload: menu,
-    });
-  };
+  }, [location.pathname]);
 
   const renderMenu = (menu: MenuConfig) => {
     if (menu.type !== 2 && (!menu.children || !menu.children.length)) {
@@ -66,12 +60,12 @@ const Authorized = (props: Props) => {
           })}
         </SubMenu>
       );
-    } else {
+    }
+    else {
       return (
         <Menu.Item
           key={menu.id}
           icon={menu.icon}
-          onClick={() => addMenuList(menu)}
         >
           {menu.name}
         </Menu.Item>
